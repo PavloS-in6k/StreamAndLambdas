@@ -1,25 +1,16 @@
 package com.in6k.StreamAndLambdas;
 
-
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.util.*;
-import java.util.regex.Matcher;
 import java.util.stream.Stream;
 
 import static com.in6k.StreamAndLambdas.MyTestClass.*;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 public class GeneralTests {
 
@@ -100,10 +91,6 @@ public class GeneralTests {
                 LocalDate.parse("2016-01-31")
         ));
         Map<Month, LocalDate> dates = new HashMap<>();
-
-        dates.put(Month.JANUARY, LocalDate.parse("2016-01-30"));
-        dates.put(Month.JANUARY, LocalDate.parse("2016-01-31"));
-
 
 
         assertThat(getMapOfDaysFromStream(stream), equalTo(dates));

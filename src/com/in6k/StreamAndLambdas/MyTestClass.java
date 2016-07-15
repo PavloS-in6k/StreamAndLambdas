@@ -1,19 +1,14 @@
 package com.in6k.StreamAndLambdas;
 
-import sun.security.pkcs11.wrapper.Functions;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 public class MyTestClass {
@@ -28,13 +23,16 @@ public class MyTestClass {
                 .filter(value -> isDateValid(value));
     }
 
-    public static Map<Month, List<LocalDate>> getMapOfDaysFromStream(Stream<LocalDate> stream) {
-        //return stream.collect(Collectors.groupingBy(value -> value.getMonth(), value -> value));
-        return stream
-                .collect(toMap(value -> value.getMonth(), value -> value))
-                .entrySet()
-                .stream().collect(Collectors.toMap());
+    public static String getMapOfDaysFromStream(Stream<LocalDate> stream) {
+        Map<Month, List<LocalDate>> dates = stream
+                .collect(Collectors.groupingBy(LocalDate::getMonth));
 
+        dates.values().stream()
+                .forEach(value -> value.removeAll(value.subList(2, value.size() - 2)));
+        return dates.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(s -> String.format(String.valueOf(s.getKey())) + " " + s.getValue())
+                .collect(Collectors.joining("\n"));
 
     }
 
